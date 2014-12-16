@@ -25,20 +25,55 @@ $(document).ready(function(){
     var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
-      Math.random() * 1000
+       Math.random() * 1000
     );
+  $(".dancer").hover(function(){
+    $("span").addClass("mouseDancer");
+  });
     window.dancers.push(dancer);
     $('body').append(dancer.$node);
   });
-    $(".moveDancerButton").on("click", function(event){
-      var lineUp = function (){
-        for (var i = 0; window.dancers.length; i++){
-          window.dancers[i].moveLeft(10);
-        }
 
-      };
-      lineUp();
 
-    });
+  $(".moveDancerButton").on("click", function(event){
+    var lineUp = function (){
+      for (var i = 0; window.dancers.length; i++){
+        window.dancers[i].moveLeft(10);
+      }
+
+    };
+    lineUp();
+
+  });
+
+    $(".moveDancerCloser").on("click", function(event){
+    var moveCloser = function (){
+      var pointA = window.dancers[Math.floor(Math.random()*window.dancers.length)];
+      var pointB = window.dancers[Math.floor(Math.random()*window.dancers.length)];
+      while (pointA === pointB){
+        pointA = window.dancers[Math.floor(Math.random()*window.dancers.length)];
+      }
+      var distance = pythag(pointA.left-pointB.left, pointA.top-pointB.top);
+      while (distance> 100){
+        pointA.top = $("body").height() * Math.random();
+        pointB.top = $("body").height() * Math.random();
+        pointA.left = $("body").width() * Math.random();
+        pointB.left = $("body").width() * Math.random();
+        pointA.setPosition(pointA.top,pointA.left);
+        pointB.setPosition(pointB.top,pointB.left);
+        distance = pythag(pointA.left-pointB.left, pointA.top-pointB.top);
+      }
+      // for (var i = 0; window.dancers.length; i++){
+      //   window.dancers[i].moveLeft(10);
+      // }
+
+    };
+    setInterval(moveCloser(), 1000);
+
+  });
+
+  var pythag = function(a,b){
+    return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+  }
 });
 

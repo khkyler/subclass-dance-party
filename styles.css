@@ -25,3 +25,12 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
+
+.dancer :hover {
+  background : blue;
+  max-width: 10%;
+}
+/*.mouseDancer{
+  background: blue;
+  width: 50px;
+}*/
