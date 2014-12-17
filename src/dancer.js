@@ -15,43 +15,29 @@ var Dancer = function(top, left, timeBetweenSteps){
 
   });
 
-
   this.step();
-
-
-  // now that we have defined the dancer object, we can start setting up important parts of it by calling the methods we wrote
-  // this one sets the position to some random default point within the body
   this.setPosition(top, left);
 
-  //return dancer;
 };
 Dancer.prototype.findDistance = function(a,b){
     return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
-
-
 };
 
 Dancer.prototype.moveDancer = function (pointA, pointB) {
-
-
-      var distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
-      while (distance> 100){
-        pointA.top = $("body").height() * Math.random();
-        pointB.top = $("body").height() * Math.random();
-        pointA.left = $("body").width() * Math.random();
-        pointB.left = $("body").width() * Math.random();
-        pointA.move(pointA.top,pointA.left);
-        pointB.move(pointB.top,pointB.left);
-        distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
-      }
-
-
+  var distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
+  while (distance> 100){
+    pointA.top = $("body").height() * Math.random();
+    pointB.top = $("body").height() * Math.random();
+    pointA.left = $("body").width() * Math.random();
+    pointB.left = $("body").width() * Math.random();
+    pointA.move(pointA.top,pointA.left);
+    pointB.move(pointB.top,pointB.left);
+    distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
+  }
 };
 
 Dancer.prototype.move = function(x,y){
   this.$node.animate({"left": x,"top": y}, "slow");
-  //this.$node.animate({"top": "+=250px"}, "slow");
-
 }
 
 Dancer.prototype.step = function(){
