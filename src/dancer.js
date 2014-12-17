@@ -2,11 +2,20 @@
 var Dancer = function(top, left, timeBetweenSteps){
   this.left = left;
   this.top = top;
+  var context = this;
 
   // use jQuery to create an HTML <span> tag
   this.$node = $('<span class="dancer"></span>');
 
-  //debugger;
+  this.$node.mouseover(function(){
+    $(this).addClass("mouseDancer");
+    var x = "+=" + (250-(Math.random() * 500)) + "px";
+    var y = "+=" + (250-(Math.random() * 500)) + "px";
+    context.move(x,y);
+
+  });
+
+
   this.step();
 
 
@@ -16,6 +25,35 @@ var Dancer = function(top, left, timeBetweenSteps){
 
   //return dancer;
 };
+Dancer.prototype.findDistance = function(a,b){
+    return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+
+
+};
+
+Dancer.prototype.moveDancer = function (pointA, pointB) {
+
+
+      var distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
+      while (distance> 100){
+        pointA.top = $("body").height() * Math.random();
+        pointB.top = $("body").height() * Math.random();
+        pointA.left = $("body").width() * Math.random();
+        pointB.left = $("body").width() * Math.random();
+        pointA.move(pointA.top,pointA.left);
+        pointB.move(pointB.top,pointB.left);
+        distance = this.findDistance(pointA.left-pointB.left, pointA.top-pointB.top);
+      }
+
+
+};
+
+Dancer.prototype.move = function(x,y){
+  this.$node.animate({"left": x,"top": y}, "slow");
+  //this.$node.animate({"top": "+=250px"}, "slow");
+
+}
+
 Dancer.prototype.step = function(){
   // the basic dancer doesn't do anything interesting at all on each step,
   // it just schedules the next step

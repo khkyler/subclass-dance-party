@@ -5,7 +5,8 @@ var GifDancer = function(top, left, timeBetweenSteps){
 
   // we plan to overwrite the step function below, but we still want the superclass step behavior to work,
   // so we must keep a copy of the old version of this function
-
+  this.rotation = 0;
+  this.$node.addClass("gifDancer");
 };
 
 GifDancer.prototype = Object.create(Dancer.prototype);
@@ -15,18 +16,21 @@ GifDancer.prototype.step = function(){
 
   Dancer.prototype.step.call(this);
 
-  this.$node.toggle();
+  //sets rotation on the gif
+  this.rotation += 30;
+  this.$node.css('transform','rotate('+ this.rotation + 'deg)');
+
 };
 
-  GifDancer.prototype.setPosition = function(top, left){
-    // Use css top and left properties to position our <span> tag
-    // where it belongs on the page. See http://api.jquery.com/css/
-    this.$node.append('<img src="src/giphy.gif">');
-    var styleSettings = {
-      top: top,
-      left: left,
-      //border: 'blue'
+GifDancer.prototype.setPosition = function(top, left){
+  // Use css top and left properties to position our <span> tag
+  // where it belongs on the page. See http://api.jquery.com/css/
 
-    };
-    this.$node.css(styleSettings);
+  var styleSettings = {
+    top: top,
+    left: left,
+    //border: 'blue'
+
   };
+  this.$node.css(styleSettings);
+};
